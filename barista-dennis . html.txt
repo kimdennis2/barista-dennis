@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barista Dennis | Web3 Coffee Experience</title>
+    <style>
+        /* W3Schools-inspired: Clean, simple, well-commented CSS */
+        
+        /* Color Variables - Like W3.CSS */
+        :root {
+            --coffee-dark: #2C1810;
+            --coffee-medium: #4A3728;
+            --coffee-light: #8B6F47;
+            --cream: #F5F5DC;
+            --warm-white: #FAF9F6;
+            --accent: #D4A574;
+            --web3-purple: #6366f1;
+            --web3-cyan: #06b6d4;
+            --success: #10b981;
+        }
+        
+        /* Reset - W3Schools style */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--coffee-dark) 0%, var(--coffee-medium) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* Main Container - W3-Container style */
+        .w3-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--warm-white);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+        
+        /* Header - W3-Header style */
+        .w3-header {
+            background: linear-gradient(135deg, var(--coffee-medium), var(--coffee-dark));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .w3-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        .web3-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--web3-purple), var(--web3-cyan));
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Chat Area - W3-Card style */
+        .w3-card {
+            height: 450px;
+            overflow-y: auto;
+            padding: 25px;
+            background: linear-gradient(to bottom, #fff8e7, var(--warm-white));
+            scroll-behavior: smooth;
+        }
+        
+        /* Message Bubbles - W3-Border style */
+        .msg {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        .msg.user {
+            flex-direction: row-reverse;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            margin: 0 12px;
+            background: var(--coffee-medium);
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .msg.user .avatar {
+            background: var(--web3-purple);
+        }
+        
+        .bubble {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            line-height: 1.6;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .msg.bot .bubble {
+            background: white;
+            color: var(--coffee-dark);
+            border-bottom-left-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .msg.user .bubble {
+            background: linear-gradient(135deg, var(--coffee-medium), var(--coffee-dark));
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        /* Quick Buttons - W3-Button style */
+        .w3-bar {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .w3-button {
+            background: white;
+            border: 2px solid var(--coffee-light);
+            color: var(--coffee-dark);
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .w3-button:hover {
+            background: var(--coffee-medium);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .w3-button.web3 {
+            border-color: var(--web3-purple);
+            color: var(--web3-purple);
+        }
+        
+        .w3-button.web3:hover {
+            background: var(--web3-purple);
+            color: white;
+        }
+        
+        /* Input Area - W3-Input style */
+        .w3-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .w3-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1em;
+            outline: none;
+        }
+        
+        .w3-input:focus {
+            border-color: var(--coffee-medium);
+        }
+        
+        .w3-send {
+            background: var(--coffee-medium);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+        
+        .w3-send:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Menu Grid - W3-Grid style */
+        .w3-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .w3-col {
+            background: linear-gradient(135deg, #fff8e7, white);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #ddd;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .w3-col:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .w3-col h4 {
+            color: var(--coffee-dark);
+            margin-bottom: 5px;
+        }
+        
+        .price {
+            color: var(--coffee-medium);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        /* Web3 Features - NFT Cards */
+        .nft-card {
+            background: linear-gradient(135deg, var(--web3-purple), var(--web3-cyan));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .nft-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* Loyalty Points Display */
+        .loyalty-box {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .points {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        /* Dennis Profile */
+        .dennis-card {
+            background: linear-gradient(135deg, var(--coffee-medium), var(--coffee-dark));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .dennis-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            border: 3px solid white;
+        }
+        
+        /* Responsive - W3-Mobile style */
+        @media (max-width: 600px) {
+            .w3-header h1 { font-size: 1.5em; }
+            .w3-card { height: 350px; }
+            .bubble { max-width: 85%; }
+            .w3-row { grid-template-columns: 1fr; }
+        }
+        
+        /* Typing Animation */
+        .typing {
+            display: none;
+            padding: 15px;
+            background: white;
+            border-radius: 20px;
+            margin-left: 70px;
+            width: fit-content;
+        }
+        
+        .typing.active {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--coffee-light);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+        
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- W3Schools Style Container -->
+<div class="w3-container">
+    
+    <!-- Header Section -->
+    <div class="w3-header">
+        <h1>☕ Barista Dennis</h1>
+        <p>Web3-Enabled Coffee Experience</p>
+        <span class="web3-badge">🔗 Blockchain Loyalty | 💎 NFT Rewards</span>
+    </div>
+    
+    <!-- Chat Display Area -->
+    <div class="w3-card" id="chatBox">
+        <!-- Messages appear here -->
+    </div>
+    
+    <!-- Typing Indicator -->
+    <div class="typing" id="typing">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+    
+    <!-- Quick Reply Buttons -->
+    <div class="w3-bar" id="quickButtons">
+        <!-- Buttons generated by JS -->
+    </div>
+    
+    <!-- User Input -->
+    <div class="w3-input-area">
+        <input type="text" class="w3-input" id="userInput" placeholder="Ask Dennis about coffee or Web3 rewards...">
+        <button class="w3-send" onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // W3SCHOOLS-STYLE JAVASCRIPT - EASY TO LEARN
+    // ==========================================
+    
+    // Data Object - Like W3Schools Examples
+    const shopData = {
+        barista: {
+            name: "Dennis",
+            role: "Web3 Barista & Coffee Specialist",
+            experience: "Bridging traditional coffee craft with blockchain innovation",
+            passion: "Making every cup a digital collectible experience",
+            nftSkill: "Creates digital art with every latte"
+        },
+        menu: [
+            { name: "Espresso", price: "KSh 350", description: "Bold shot with NFT receipt", emoji: "☕", type: "classic" },
+            { name: "Blockchain Brew", price: "KSh 450", description: "Cold brew + digital collectible", emoji: "⛓️", type: "web3" },
+            { name: "NFT Latte", price: "KSh 550", description: "Latte art minted as NFT", emoji: "🎨", type: "web3" },
+            { name: "Smart Contract Cappuccino", price: "KSh 500", description: "Auto-loyalty points on chain", emoji: "📜", type: "web3" },
+            { name: "Crypto Cold Brew", price: "KSh 480", description: "Pay with M-Pesa or Crypto", emoji: "💰", type: "web3" },
+            { name: "Genesis Pour Over", price: "KSh 600", description: "Single origin, traceable on blockchain", emoji: "🌟", type: "web3" }
+        ],
+        web3Features: {
+            loyalty: "Earn 'Bean Tokens' for every purchase",
+            nftRewards: "Collect 5 NFT receipts, get 1 free coffee",
+            cryptoPay: "Accept Bitcoin, Ethereum, M-Pesa",
+            dao: "Join our Coffee DAO for exclusive blends"
+        },
+        location: "Nairobi, Kenya - Westlands Hub"
+    };
+
+    // Global Variables - W3Schools Style
+    let userPoints = 0;
+    let nftCount = 0;
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+    const typing = document.getElementById("typing");
+    const quickButtons = document.getElementById("quickButtons");
+
+    // Initialize Chat - Like W3Schools onload
+    window.onload = function() {
+        setTimeout(() => {
+            addBotMessage("Jambo! I'm Dennis, your Web3 Barista. ☕✨");
+            setTimeout(() => {
+                addBotMessage("I don't just make coffee—I create blockchain-verified experiences. Every cup earns you 'Bean Tokens' redeemable for NFTs!");
+                showButtons(["View Web3 Menu", "Meet Dennis", "How does loyalty work?", "Pay with Crypto?"]);
+            }, 800);
+        }, 500);
+    };
+
+    // Function to Add Bot Message - W3Schools Function Style
+    function addBotMessage(text, isHTML = false) {
+        let msgDiv = document.createElement("div");
+        msgDiv.className = "msg bot";
+        
+        let content = isHTML ? text : `<div class="bubble">${text}</div>`;
+        msgDiv.innerHTML = `<div class="avatar">☕</div>${content}`;
+        
+        chatBox.appendChild(msgDiv);
+        scrollToBottom();
+    }
+
+    // Function to Add User Message
+    function addUserMessage(text) {
+        let msgDiv = document.createElement("div");
+        msgDiv.className = "msg user";
+        msgDiv.innerHTML = `<div class="avatar">😊</div><div class="bubble">${text}</div>`;
+        chatBox.appendChild(msgDiv);
+        scrollToBottom();
+    }
+
+    // Function to Show Typing
+    function showTyping() {
+        typing.classList.add("active");
+        scrollToBottom();
+    }
+
+    // Function to Hide Typing
+    function hideTyping() {
+        typing.classList.remove("active");
+    }
+
+    // Function to Scroll Chat
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Function to Create Buttons - W3Schools Event Handling
+    function showButtons(options) {
+        quickButtons.innerHTML = ""; // Clear existing
+        
+        options.forEach(option => {
+            let btn = document.createElement("button");
+            btn.className = option.includes("Web3") || option.includes("Crypto") || option.includes("NFT") || option.includes("loyalty") ? "w3-button web3" : "w3-button";
+            btn.innerHTML = option;
+            
+            // W3Schools Style Event Listener
+            btn.onclick = function() {
+                userInput.value = option;
+                sendMessage();
+            };
+            
+            quickButtons.appendChild(btn);
+        });
+    }
+
+    // Main Send Function - W3Schools Style Logic
+    function sendMessage() {
+        let text = userInput.value.trim();
+        if (text === "") return; // Validation like W3Schools
+        
+        addUserMessage(text);
+        userInput.value = "";
+        quickButtons.innerHTML = ""; // Clear buttons
+        
+        // Show typing effect
+        showTyping();
+        
+        // Process response with delay (simulating thinking)
+        setTimeout(function() {
+            hideTyping();
+            processMessage(text.toLowerCase());
+        }, 1000);
+    }
+
+    // Message Processing - W3Schools If-Else Logic
+    function processMessage(input) {
+        let response = "";
+        let isHTML = false;
+        let nextButtons = [];
+
+        // Menu Requests
+        if (input.includes("menu") || input.includes("drink") || input.includes("coffee")) {
+            response = createMenuHTML();
+            isHTML = true;
+            nextButtons = ["What is Blockchain Brew?", "Tell me about NFT Latte", "How do I pay?", "Meet Dennis"];
+        }
+        
+        // Web3/Blockchain Questions
+        else if (input.includes("web3") || input.includes("blockchain") || input.includes("loyalty") || input.includes("token")) {
+            response = createWeb3InfoHTML();
+            isHTML = true;
+            nextButtons = ["View Web3 Menu", "Connect Wallet (Demo)", "Meet Dennis", "Location?"];
+            userPoints += 10; // Earn points for learning
+        }
+        
+        // Dennis Info
+        else if (input.includes("dennis") || input.includes("barista") || input.includes("who")) {
+            response = createDennisHTML();
+            isHTML = true;
+            nextButtons = ["View Web3 Menu", "How does loyalty work?", "Pay with Crypto?"];
+        }
+        
+        // Specific Drinks
+        else if (input.includes("blockchain brew")) {
+            response = "Our <strong>Blockchain Brew</strong> is cold coffee steeped for 12 hours, served with a unique QR code that mints your experience as an NFT on Polygon blockchain. Collect them all! ⛓️☕";
+            nextButtons = ["How much is it?", "What is NFT Latte?", "View full menu"];
+        }
+        
+        else if (input.includes("nft latte")) {
+            response = "The <strong>NFT Latte</strong> is where art meets blockchain. I create latte art, photograph it, and mint it as an NFT sent to your wallet. You own the art forever! Plus it tastes amazing. 🎨☕";
+            nextButtons = ["Price?", "Other Web3 drinks?", "Meet Dennis"];
+        }
+        
+        // Pricing
+        else if (input.includes("price") || input.includes("cost") || input.includes("how much") || input.includes("ksh")) {
+            response = `Our Web3 coffees range from <strong>${shopData.menu[0].price}</strong> to <strong>${shopData.menu[5].price}</strong>. Every purchase earns you 10 Bean Tokens. Collect 100 tokens = 1 free NFT coffee! 💎`;
+            nextButtons = ["View Web3 Menu", "How does loyalty work?", "Pay with Crypto?"];
+        }
+        
+        // Crypto Payment
+        else if (input.includes("crypto") || input.includes("bitcoin") || input.includes("ethereum") || input.includes("pay") || input.includes("m-pesa")) {
+            response = "We accept: <strong>M-Pesa</strong> (instant), <strong>Bitcoin</strong>, <strong>Ethereum</strong>, or <strong>USDC</strong>. Crypto payments get 5% bonus loyalty points! In Nairobi, we bridge traditional mobile money with Web3. 💰📱";
+            nextButtons = ["View Web3 Menu", "How does loyalty work?", "Location?"];
+        }
+        
+        // Location
+        else if (input.includes("location") || input.includes("where") || input.includes("nairobi") || input.includes("find")) {
+            response = `📍 <strong>${shopData.location}</strong><br><br>We're in the heart of Nairobi's tech district. Look for the coffee shop with the Ethereum logo! Perfect for remote work with reliable WiFi.`;
+            nextButtons = ["View Web3 Menu", "Meet Dennis", "How does loyalty work?"];
+        }
+        
+        // Wallet Connect (Demo)
+        else if (input.includes("wallet") || input.includes("connect")) {
+            response = createWalletHTML();
+            isHTML = true;
+            nextButtons = ["View Web3 Menu", "Check My Points", "Meet Dennis"];
+            nftCount++; // Simulate earning NFT
+        }
+        
+        // Check Points
+        else if (input.includes("points") || input.includes("balance")) {
+            response = createPointsHTML();
+            isHTML = true;
+            nextButtons = ["View Web3 Menu", "Connect Wallet (Demo)", "Redeem Rewards"];
+        }
+        
+        // Greetings
+        else if (input.includes("hi") || input.includes("hello") || input.includes("jambo") || input.includes("hey")) {
+            response = "Jambo! ☕ Ready to explore the future of coffee? I'm Dennis, and I'm here to make your coffee experience unforgettable and blockchain-verified!";
+            nextButtons = ["View Web3 Menu", "Meet Dennis", "How does loyalty work?"];
+        }
+        
+        // Default Response
+        else {
+            response = "I'm learning every day! I can tell you about our <strong>Web3 coffee menu</strong>, how our <strong>blockchain loyalty</strong> works, or introduce myself. What interests you?";
+            nextButtons = ["View Web3 Menu", "Meet Dennis", "How does loyalty work?"];
+        }
+
+        addBotMessage(response, isHTML);
+        if (nextButtons.length > 0) {
+            showButtons(nextButtons);
+        }
+    }
+
+    // HTML Generator Functions - Like W3Schools InnerHTML Examples
+    
+    function createMenuHTML() {
+        let html = "<div style='margin-bottom:15px'><strong>☕ Web3 Coffee Menu:</strong></div><div class='w3-row'>";
+        
+        shopData.menu.forEach(item => {
+            html += `
+                <div class="w3-col" onclick="selectDrink('${item.name}')">
+                    <div style="font-size:2em">${item.emoji}</div>
+                    <h4>${item.name}</h4>
+                    <div class="price">${item.price}</div>
+                    <p style="font-size:0.9em;color:#666">${item.description}</p>
+                    ${item.type === 'web3' ? '<span style="color:#6366f1;font-size:0.8em">⛓️ Web3 Enabled</span>' : ''}
+                </div>
+            `;
+        });
+        
+        html += "</div>";
+        return html;
+    }
+    
+    function createWeb3InfoHTML() {
+        return `
+            <div class="nft-card">
+                <h3>⛓️ Web3 Loyalty Program</h3>
+                <div class="nft-badge">🔐 Blockchain Verified</div>
+                <p><strong>${shopData.web3Features.loyalty}</strong></p>
+                <p>${shopData.web3Features.nftRewards}</p>
+                <p style="margin-top:10px;font-size:0.9em">${shopData.web3Features.dao}</p>
+            </div>
+            <div style="margin-top:15px">
+                <strong>Why Web3 Coffee?</strong><br>
+                • Immutable proof of your coffee journey<br>
+                • Trade rare coffee NFTs with other collectors<br>
+                • DAO voting on new seasonal blends<br>
+                • Transparent, fair trade bean tracking
+            </div>
+        `;
+    }
+    
+    function createDennisHTML() {
+        return `
+            <div class="dennis-card">
+                <div class="dennis-avatar">👨‍💻</div>
+                <div>
+                    <h3>${shopData.barista.name}</h3>
+                    <p><strong>${shopData.barista.role}</strong></p>
+                    <p>${shopData.barista.experience}</p>
+                    <p style="font-size:0.9em;margin-top:5px">${shopData.barista.passion}</p>
+                    <span style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:10px;font-size:0.8em">${shopData.barista.nftSkill}</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    function createWalletHTML() {
+        return `
+            <div class="nft-card">
+                <h3>🔐 Wallet Connected!</h3>
+                <p>MetaMask detected (Demo Mode)</p>
+                <div class="nft-badge">✅ 0x71C...9A2D</div>
+                <p style="margin-top:10px">You just earned your first <strong>Coffee NFT</strong>!</p>
+                <p style="font-size:0.8em">View on OpenSea →</p>
+            </div>
+            <div class="loyalty-box" style="margin-top:15px">
+                <span>Current Balance:</span>
+                <span class="points">${userPoints} Bean Tokens</span>
+            </div>
+        `;
+    }
+    
+    function createPointsHTML() {
+        return `
+            <div class="loyalty-box">
+                <div>
+                    <div style="font-size:0.9em">Your Web3 Coffee Balance</div>
+                    <div class="points">${userPoints} Bean Tokens</div>
+                    <div style="font-size:0.8em">${nftCount} NFTs Collected</div>
+                </div>
+                <div style="font-size:2em">☕</div>
+            </div>
+            <p style="margin-top:15px">Earn 10 tokens per coffee. At 100 tokens, mint a free <strong>Genesis Pour Over NFT</strong>!</p>
+        `;
+    }
+    
+    // Helper for drink selection
+    function selectDrink(drinkName) {
+        userInput.value = "Tell me about " + drinkName;
+        sendMessage();
+    }
+
+    // Enter Key Support - W3Schools Event Listener
+    userInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
+</script>
+
+</body>
+</html>
